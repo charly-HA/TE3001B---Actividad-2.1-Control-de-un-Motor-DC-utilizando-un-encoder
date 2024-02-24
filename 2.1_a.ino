@@ -9,15 +9,7 @@
 #define FREQ 5000
 #define RES 8
 
-#define DT 20000
-#define REDUCTOR 34
-#define CPR 12
-
 double pos = 0;
-double pos_ant = 0;
-double timer = 0;
-float vel = 0;
-
 int duty_cycle = 100;
 
 //Funcion para los cambios (FALLING) en el canal A
@@ -48,23 +40,12 @@ void setup() {
   //Seleccionar sentido de giro
   digitalWrite(IN_1, LOW);
   digitalWrite(IN_2, HIGH);
-  ledcWrite(PWM_CH, duty_cycle);
   
 }
 
 void loop() {
-  // Revisar si ha transcurrido un periodo de tiempo
-  if ((micros()-timer)>DT){
-    timer = micros();
-    // Estimar la velocidad del motor en RPM
-    vel = (((pos - pos_ant)/DT)/(CPR*REDUCTOR))*(100000*60);
-    pos_ant = pos;
-    Serial.print("TIEMPO: ");
-    Serial.println(timer/100000);
-    Serial.print("   Posicion: ");
-    Serial.print(pos);
-    Serial.print("   Velocidad: ");
-    Serial.println(vel);
-    
-    } 
+  // put your main code here, to run repeatedly:
+  ledcWrite(PWM_CH, duty_cycle);
+  Serial.println(pos);
+ 
 }
